@@ -60,6 +60,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// prevent back after logout
+app.use(function (req, res, next) {
+  res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+  next();
+});
+
 // set global var
 app.use(function (req, res, next) {
   res.locals.user = req.user || null;
